@@ -1,0 +1,33 @@
+<%- model_class = Bug -%>
+<div class="page-header">
+  <h1>
+    <%=t '.title', :default => model_class.model_name.human.titleize %>
+  </h1>
+</div>
+<p id="notice"><%= notice %></p>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @bug.title %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @bug.description %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:severity) %>:</strong></dt>
+  <dd><%= model_class.human_attribute_name(@bug.severity) %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
+  <dd><%= model_class.human_attribute_name(@bug.state) %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:tasks) %>:</strong></dt>
+  <% @bug.tasks.each do |task| %>
+    <dd><%= link_to task.title, project_task_path(@project, task) %></dd>
+  <% end %>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              project_bugs_path(@project), :class => 'btn btn-default'  %>
+<% if current_user.project_hierarchy?(@bug.project) >= 1 || @bug.creator == current_user %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_project_bug_path(@project, @bug), :class => 'btn btn-default' %>
+<% end %>
