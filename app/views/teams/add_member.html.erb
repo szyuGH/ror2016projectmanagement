@@ -1,0 +1,40 @@
+<%= form_for(:team_member, :html => { :class => "form-horizontal event", :method => 'put'}, :url => {:action => "create", :id => @member}) do |f| %>
+<% if @member.errors.any? %>
+  <div id="error_explanation" class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+      <% @member.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <%= f.label :user, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= f.select :user_id, User.select{|u| !@team.has_member?(u)}.map{|u,v| [u.display_name, u.id] }, :class => 'form-control' %>
+  </div>
+</div>
+
+<% if current_user.project_hierarchy?(@team.project) >= 2 %>
+  <div class="form-group">
+    <%= f.label :is_admin, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.check_box :is_admin %>
+    </div>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <div class="col-lg-offset-2 col-lg-10">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+              project_team_path(@team.project), :class => 'btn btn-default' %>
+  </div>
+</div>
+<% end %>
