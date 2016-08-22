@@ -26,10 +26,6 @@
   <dt><strong><%= model_class.human_attribute_name(:bugs) %>:</strong></dt>
   <dd><%= link_to @project.bugs.count, project_bugs_path(@project) %></dd>
 
-  <% if current_user.project_hierarchy?(@project) >= 0 %>
-    <dt><strong>Assets:</strong></dt>
-    <dd><%= link_to "...", project_asset_directory_index_path(@project) %></dd>
-  <% end %>
 </dl>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),

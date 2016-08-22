@@ -4,7 +4,7 @@ class Project < ActiveRecord::Base
   has_many :bugs
   has_many :tasks
 
-  validates :name, presence: true
+  validates :title, presence: true
   validates :description, presence: true
   validates_associated :team
   validates_associated :bugs
