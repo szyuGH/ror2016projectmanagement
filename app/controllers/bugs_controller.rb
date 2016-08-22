@@ -35,7 +35,7 @@ class BugsController < ApplicationController
 
     respond_to do |format|
       if @bug.save
-        format.html { redirect_to project_bugs_path(@project), notice: 'Bug was successfully created.' }
+        format.html { redirect_to project_bug_path(@project, @bug), notice: 'Bug was successfully created.' }
         format.json { render :show, status: :created, location: @bug }
       else
         format.html { render :new }
@@ -47,9 +47,10 @@ class BugsController < ApplicationController
   # PATCH/PUT /bugs/1
   # PATCH/PUT /bugs/1.json
   def update
+    @bug.screenshot = params[:bug][:screenshot]
     respond_to do |format|
       if @bug.update(bug_params)
-        format.html { redirect_to @bug, notice: 'Bug was successfully updated.' }
+        format.html { redirect_to project_bug_path(@project, @bug), notice: 'Bug was successfully updated.' }
         format.json { render :show, status: :ok, location: @bug }
       else
         format.html { render :edit }
@@ -80,6 +81,6 @@ class BugsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bug_params
-      params.require(:bug).permit(:title, :description, :severity, :state, :screenshot)
+      params.require(:bug).permit(:title, :description, :severity, :state)
     end
 end

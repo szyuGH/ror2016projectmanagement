@@ -1,5 +1,5 @@
 <%= form_for(@bug, :html => { :class => "form-horizontal event" },
-    :url => project_bugs_path(@project)) do |f| %>
+    :url => project_bug_path(@project, @bug)) do |f| %>
 <% if @bug.errors.any? %>
   <div id="error_explanation" class="panel panel-danger">
     <div class="panel-heading">
