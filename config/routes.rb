@@ -1,6 +1,28 @@
 Rails.application.routes.draw do
-  resources :projects
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+  get "/users/:user_id/projects", to: "users#project_index", as: "user_projects"
+  get "/users/:user_id/tasks", to: "users#task_index", as: "user_tasks"
+  get "/users/:user_id/available_tasks", to: "users#available_tasks", as: "user_available_tasks"
+
+  resources :projects do
+    resource :team, :only => [:show] do
+      get "/add_member", to: "teams#add_member", as: "add_member"
+      put "/create", to: "teams#create", as: "create"
+      get "/members/:member_id/promote", to: "teams#promote_member", as: "promote_member"
+      get "/members/:member_id/demote", to: "teams#demote_member", as: "demote_member"
+      get "/members/:member_id/remove", to: "teams#remove_member", as: "remove_member"
+    end
+    resources :tasks do
+      member do
+        get :claim
+        get :unclaim
+      end
+    end
+    resources :bugs
+    resources :asset_directory
+  end
+
+  root 'projects#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
