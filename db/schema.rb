@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822114740) do
+ActiveRecord::Schema.define(version: 20160822124548) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "title"
@@ -20,6 +20,25 @@ ActiveRecord::Schema.define(version: 20160822114740) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "team_members", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.boolean  "is_admin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "team_members", ["team_id"], name: "index_team_members_on_team_id"
+  add_index "team_members", ["user_id"], name: "index_team_members_on_user_id"
+
+  create_table "teams", force: :cascade do |t|
+    t.integer  "project_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "teams", ["project_id"], name: "index_teams_on_project_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -41,6 +60,7 @@ ActiveRecord::Schema.define(version: 20160822114740) do
     t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
+    t.boolean  "is_superuser"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
