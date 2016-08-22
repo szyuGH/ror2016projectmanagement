@@ -6,6 +6,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'nested_form_fields'
 gem 'rails_12factor', group: :production
 
+gem 'carrierwave'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -16,6 +17,7 @@ group :development do
 end
 group :production do
   gem 'pg'
+  gem 'fog'
 end
 
 # Use SCSS for stylesheets

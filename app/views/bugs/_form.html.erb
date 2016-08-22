@@ -49,6 +49,11 @@
   <%= f.hidden_field :state, :value => :open %>
 <% end %>
 
+<div class="field">
+  <%= f.label :screenshot %>
+  <%= f.file_field :screenshot %>
+</div>
+
 <div class="form-group">
   <div class="col-lg-offset-2 col-lg-10">
     <%= f.submit nil, :class => 'btn btn-primary' %>
