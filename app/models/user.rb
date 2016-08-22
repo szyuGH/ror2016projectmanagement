@@ -4,6 +4,13 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :projects, :class_name => 'Project', :foreign_key => 'manager_id'
+  has_many :tasks, :foreign_key => 'developer_id'
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :login, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
 
   def display_name
     "%s %s <%s>" % [first_name, last_name, login]

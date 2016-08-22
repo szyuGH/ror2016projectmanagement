@@ -2,6 +2,7 @@ class TeamsController < ApplicationController
   before_action :set_member, only: [:remove_member, :promote_member, :demote_member]
   before_action :set_team
   before_action :check_access_rights
+  before_action :authenticate_user!
 
   # GET /teams/1
   # GET /teams/1.json
