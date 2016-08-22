@@ -1,0 +1,39 @@
+<%- model_class = Task -%>
+<div class="page-header">
+  <h1>
+    <%=t '.title', :default => model_class.model_name.human.titleize %>
+  </h1>
+</div>
+<p id="notice"><%= notice %></p>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @task.title %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @task.description %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:deadline) %>:</strong></dt>
+  <dd><%= @task.deadline %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
+  <dd><%= model_class.human_attribute_name(@task.state) %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:progress) %>:</strong></dt>
+  <dd><%= @task.progress %>%</dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:developer) %>:</strong></dt>
+  <dd><%= @task.developer.nil? ? "-" : @task.developer.display_name %></dd>
+
+  <dt><strong><%= model_class.human_attribute_name(:bugs) %>:</strong></dt>
+  <% @task.bugs.each do |bug| %>
+    <dd><%= link_to bug.title, project_bug_path(@project, bug) %></dd>
+  <% end %>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              project_tasks_path(@project), :class => 'btn btn-default'  %>
+<% if current_user.project_hierarchy?(@task.project) > 0 || current_user == @task.developer %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_project_task_path(@project, @task), :class => 'btn btn-default' %>
+<% end %>

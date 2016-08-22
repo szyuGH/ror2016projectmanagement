@@ -5,6 +5,7 @@ class CreateBug < ActiveRecord::Migration
       t.text :description
       t.integer :state
       t.integer :project_id
+      t.integer :creator_id
 
       t.timestamps null: false
     end

@@ -1,0 +1,65 @@
+<%- model_class = Task -%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:state) %></th>
+      <th><%= model_class.human_attribute_name(:progress) %></th>
+      <th><%= model_class.human_attribute_name(:deadline) %></th>
+      <th><%= model_class.human_attribute_name(:developer) %></th>
+      <th><%= model_class.human_attribute_name(:bug_count) %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.id %></td>
+        <td><%= link_to task.title, project_task_path(task.project, task) %></td>
+        <td><%= model_class.human_attribute_name(task.state) %></td>
+        <td><%= task.progress %>%</td>
+        <td><%= task.deadline %></td>
+        <td><%= task.developer.nil? ? "-" : task.developer.display_name %></td>
+        <td><%= link_to task.bugs.count, project_bugs_path(task.project) %></td>
+        <td>
+          <% if current_user.project_hierarchy?(task.project) >= 0 %>
+            <%= link_to t('.show', :default => t("helpers.links.show")),
+                        project_task_path(task.project, task), :class => 'btn btn-default btn-xs' %>
+
+            <% if task.claimable?(current_user) %>
+              <% if task.developer.nil? %>
+                <%= link_to t('.claim', :default => t("helpers.links.claim")),
+                            claim_project_task_path(task.project, task), :class => 'btn btn-default btn-xs' %>
+              <% else %>
+                <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                            edit_project_task_path(task.project, task), :class => 'btn btn-default btn-xs' %>
+                <%= link_to t('.unclaim', :default => t("helpers.links.unclaim")),
+                            unclaim_project_task_path(task.project, task), :class => 'btn btn-default btn-xs' %>
+              <% end %>
+            <% elsif current_user.project_hierarchy?(task.project) >= 2 %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                        edit_project_task_path(task.project, task), :class => 'btn btn-default btn-xs' %>
+            <% end %>
+
+            <% if current_user.project_hierarchy?(task.project) >= 1 %>
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                        project_task_path(task.project, task),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-xs btn-danger' %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if params[:controller] == "tasks" %>
+  <% if current_user.project_hierarchy?(@project) >= 1 %>
+    <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_project_task_path(@project),
+                :class => 'btn btn-primary' %>
+  <% end %>
+<% end %>
