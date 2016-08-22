@@ -1,5 +1,5 @@
 <%= form_for(@task, :html => { :class => "form-horizontal event" },
-    :url => project_task_path(@project, @task)) do |f| %>
+    :url => project_tasks_path(@project)) do |f| %>
 <% if @task.errors.any? %>
   <div id="error_explanation" class="panel panel-danger">
     <div class="panel-heading">

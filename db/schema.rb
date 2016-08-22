@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822130042) do
+ActiveRecord::Schema.define(version: 20160822134951) do
 
   create_table "bugs", force: :cascade do |t|
     t.string   "title"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160822130042) do
     t.integer  "creator_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "severity"
   end
 
   add_index "bugs", ["project_id"], name: "index_bugs_on_project_id"

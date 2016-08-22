@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_project
   before_action :set_task, only: [:show, :edit, :update, :destroy, :claim, :unclaim]
-  before_filter :check_access_rights
   before_action :authenticate_user!
+  before_filter :check_access_rights
+
 
   # GET /tasks
   # GET /tasks.json
