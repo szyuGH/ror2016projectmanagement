@@ -3,7 +3,7 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.string :title
       t.text :description
-      t.belongs_to :manager, :class_name => 'User', :foreign_key => 'manager_id', :references => 'User'
+      t.belongs_to :manager, :class_name => 'User', :foreign_key => 'manager_id'
 
       t.timestamps null: false
     end
