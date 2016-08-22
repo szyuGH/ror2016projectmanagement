@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'devise'
 gem 'bootstrap_form'
 gem 'bootstrap-sass', '~> 3.3.6'
+gem 'nested_form_fields'
+gem 'rails_12factor', group: :production
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

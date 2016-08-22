@@ -11,15 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822124548) do
+ActiveRecord::Schema.define(version: 20160822130042) do
+
+  create_table "bugs", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "state"
+    t.integer  "project_id"
+    t.integer  "creator_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "bugs", ["project_id"], name: "index_bugs_on_project_id"
+
+  create_table "bugs_tasks", force: :cascade do |t|
+    t.integer "bug_id"
+    t.integer "task_id"
+  end
+
+  add_index "bugs_tasks", ["bug_id"], name: "index_bugs_tasks_on_bug_id"
+  add_index "bugs_tasks", ["task_id"], name: "index_bugs_tasks_on_task_id"
 
   create_table "projects", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.integer  "manager_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "manager_id"
   end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "state",        default: 0
+    t.integer  "progress",     default: 0
+    t.integer  "developer_id"
+    t.integer  "project_id"
+    t.date     "deadline"
+    t.datetime "finished_at"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "tasks", ["project_id"], name: "index_tasks_on_project_id"
 
   create_table "team_members", force: :cascade do |t|
     t.integer  "user_id"
