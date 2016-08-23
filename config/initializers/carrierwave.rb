@@ -9,13 +9,14 @@ CarrierWave.configure do |config|
 
   if Rails.env.production?
     config.storage = :fog
+    config.cache_dir = "#{Rails.root}/tmp/uploads" # to let CarrierWave work on Heroku
+    config.fog_directory = ENV['S3_BUCKET_NAME']
+    config.fog_public = true
   else
     config.storage = :file
     config.enable_processing = false
-    config.root = "#{Rails.root}/tmp"
+    config.root = "#{Rails.root}/public"
   end
 
-  config.cache_dir = "#{Rails.root}/tmp/uploads" # to let CarrierWave work on Heroku
-  config.fog_directory = ENV['S3_BUCKET_NAME']
-  config.fog_public = true
+
 end
