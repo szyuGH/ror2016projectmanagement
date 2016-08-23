@@ -4,7 +4,7 @@ CarrierWave.configure do |config|
     region: 'eu-central-1',
     aws_access_key_id: ENV['S3_KEY'],
     aws_secret_access_key: ENV['S3_SECRET'],
-    endpoint: "https://s3.amazonaws.com",
+    endpoint: "https://s3.eu-central-1.amazonaws.com",
   }
 
   if Rails.env.production?
