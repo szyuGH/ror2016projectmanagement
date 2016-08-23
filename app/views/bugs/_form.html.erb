@@ -1,5 +1,5 @@
-<%= form_for(@bug, :html => { :class => "form-horizontal event" },
-    :url => project_bugs_path(@project)) do |f| %>
+<%= form_for [@project, @bug],
+    :html => { :class => "form-horizontal event" } do |f| %>
 <% if @bug.errors.any? %>
   <div id="error_explanation" class="panel panel-danger">
     <div class="panel-heading">
@@ -48,6 +48,13 @@
 <% else %>
   <%= f.hidden_field :state, :value => :open %>
 <% end %>
+
+<div class="form-group">
+  <%= f.label :screenshot, :class => 'control-label col-lg-2' %>
+  <div class="col-lg-10">
+    <%= f.file_field :screenshot %>
+  </div>
+</div>
 
 <div class="form-group">
   <div class="col-lg-offset-2 col-lg-10">
