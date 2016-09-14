@@ -4,3 +4,5 @@
   <p id="notice"><%= notice %></p>
 </div>
 <%= render :partial => 'index' %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              project_path(@project), :class => 'btn btn-default'  %>

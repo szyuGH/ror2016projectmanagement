@@ -46,3 +46,5 @@
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_project_bug_path(@project),
             :class => 'btn btn-primary' %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+            project_path(@project), :class => 'btn btn-default'  %>
