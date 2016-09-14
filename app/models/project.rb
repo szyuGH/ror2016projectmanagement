@@ -1,8 +1,8 @@
 class Project < ActiveRecord::Base
   belongs_to :manager, :class_name => 'User', :foreign_key => 'manager_id'
-  has_one :team
-  has_many :bugs
-  has_many :tasks
+  has_one :team, :dependent => :destroy, :autosave => true
+  has_many :bugs, :dependent => :destroy
+  has_many :tasks, :dependent => :destroy
 
   validates :title, presence: true
   validates :description, presence: true

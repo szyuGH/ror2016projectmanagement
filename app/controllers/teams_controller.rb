@@ -24,7 +24,7 @@ class TeamsController < ApplicationController
         format.html { redirect_to project_team_path(@team.project), notice: 'Member was successfully added to the team.' }
         format.json { render :show, location: @team }
       else
-        format.html { render :show }
+        format.html { render :add_member }
         format.json { render json: @team.errors, status: :unpromotable_entity }
       end
     end

@@ -30,7 +30,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.project = @project
-    @task.bugs = params[:task][:bugs_attributes].values.map{|b| Bug.find_by_id(b[:id])} if params[:task][:bugs_attributes] != nil
+    @task.bugs = params[:task][:bugs_attributes].values.map{|b| Bug.find_by_id(b[:id])}.compact if params[:task][:bugs_attributes] != nil
 
     respond_to do |format|
       if @task.save
