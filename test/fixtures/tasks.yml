@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+first_task:
+  title: "My Testtask"
+  description: "Descriptiontest"
+  progress: 0
+  state: 0
+  deadline: <%= Date.today + 2.day %>
+  bugs: first_bug
+  project_id: 1

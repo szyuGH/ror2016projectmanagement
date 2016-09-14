@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+first_bug:
+  project_id: 1
+  creator_id: 1
+  title: "Testbug"
+  description: "Bugdescription"
+  state: 1
+  severity: 1
+  tasks: first_task

@@ -5,7 +5,6 @@ class Task < ActiveRecord::Base
 
   accepts_nested_attributes_for :bugs
 
-  validates :project, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :deadline, presence: true

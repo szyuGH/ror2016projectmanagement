@@ -29,6 +29,7 @@ class ProjectsController < ApplicationController
     @project.manager = current_user
     @project.team = Team.new({:project => @project, :members => []})
 
+
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }

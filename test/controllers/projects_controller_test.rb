@@ -1,8 +1,14 @@
 require 'test_helper'
 
 class ProjectsControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers
+  include Warden::Test::Helpers
+
   setup do
     @project = projects(:one)
+    # @project.team = Team.new({:project => @project, :members => []})
+    @project.team = teams(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
@@ -18,7 +24,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test "should create project" do
     assert_difference('Project.count') do
-      post :create, project: { description: @project.description, manager_id: @project.manager_id, title: @project.title }
+      post :create, project: { description: "testdesc", title: "Test2" }
     end
 
     assert_redirected_to project_path(assigns(:project))
