@@ -9,6 +9,6 @@ one:
   email: a@b.c
   encrypted_password: test
   confirmed_at: <%= Time.now %>
-  login: testuser
+  username: testuser
   first_name: test
   last_name: user

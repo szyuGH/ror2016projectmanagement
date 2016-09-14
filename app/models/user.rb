@@ -9,11 +9,13 @@ class User < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :login, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true, :format => { with: /^[a-zA-Z0-9_\.]*$/, :multiline => true }
   validates :email, presence: true, uniqueness: true
 
+  attr_accessor :login
+
   def display_name
-    "%s %s <%s>" % [first_name, last_name, login]
+    "%s %s <%s>" % [first_name, last_name, username]
   end
 
   def team_members
@@ -43,5 +45,14 @@ class User < ActiveRecord::Base
     return -1 if project_team_member.nil?
     return 1 if project_team_member.is_admin
     return 0
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_hash).first
+    end
   end
 end
