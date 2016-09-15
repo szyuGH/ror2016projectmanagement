@@ -20,7 +20,8 @@ class TeamsController < ApplicationController
     @member.team = @team
     @team.members.push(@member)
     respond_to do |format|
-      if @member.save && @team.save
+      if @team.save
+        ProjectMailer.team_user_added_email(@member.user, @team.project).deliver_later
         format.html { redirect_to project_team_path(@team.project), notice: 'Member was successfully added to the team.' }
         format.json { render :show, location: @team }
       else
@@ -34,6 +35,7 @@ class TeamsController < ApplicationController
     @team.members.delete(@member)
     respond_to do |format|
       if @team.save
+        ProjectMailer.team_user_removed_email(@member.user, @team.project).deliver_later
         format.html { redirect_to project_team_path(@team.project), notice: 'Member was successfully removed from the team.' }
         format.json { render :show, location: @team }
       else
@@ -47,6 +49,7 @@ class TeamsController < ApplicationController
     @member.is_admin = true
     respond_to do |format|
       if @member.save
+        ProjectMailer.team_user_promoted_email(@member.user, @team.project).deliver_later
         format.html { redirect_to project_team_path(@team.project), notice: 'Member was successfully promoted to admin.' }
         format.json { render :show, location: @team }
       else
@@ -60,6 +63,7 @@ class TeamsController < ApplicationController
     @member.is_admin = false
     respond_to do |format|
       if @member.save
+        ProjectMailer.team_user_demoted_email(@member.user, @team.project).deliver_later
         format.html { redirect_to project_team_path(@team.project), notice: 'Member was successfully demoted.' }
         format.json { render :show, location: @team }
       else
