@@ -22,7 +22,12 @@ Rails.application.routes.draw do
     resources :asset_directory
   end
 
-  root 'projects#index'
+  authenticated :user do
+    root 'projects#index', as: :authenticated_root
+  end
+  devise_scope :user do
+    root 'devise/sessions#new'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
