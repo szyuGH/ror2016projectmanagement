@@ -2,7 +2,8 @@
     <h2><%=t '.title', :default => [:'helpers.titles.new', 'Sign up'] %></h2>
   </div>
 
-<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<%= bootstrap_form_for(resource, as: resource_name, url: registration_path(resource_name),
+  layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-8") do |f| %>
 
   <% if !flash[:alert].nil? %>
     <div class="alert alert-danger" role="alert">
@@ -10,36 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
     <%= f.text_field :username, autofocus: true %>
-  </div>
 
-  <div class="field">
     <%= f.text_field :first_name %>
-  </div>
 
-  <div class="field">
     <%= f.text_field :last_name %>
-  </div>
 
-  <div class="field">
     <%= f.email_field :email, autofocus: true %>
-  </div>
 
-  <div class="field">
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+    <%= f.password_field :password, autocomplete: "off", help: "(#{@minimum_password_length} characters minimum)" %>
 
-  <div class="field">
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+    <%= f.form_group do %>
+      <%= f.submit %>
+    <% end %>
 <% end %>
 
 <%= render "devise/shared/links" %>
