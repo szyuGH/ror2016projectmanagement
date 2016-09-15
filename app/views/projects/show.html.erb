@@ -1,8 +1,9 @@
+<div class="container">
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1>
+  <h2>
     <%=t '.name', :default => model_class.model_name.human.titleize %>
-  </h1>
+  </h2>
 </div>
 
 <dl class="dl-horizontal">
@@ -34,3 +35,4 @@
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_project_path(@project), :class => 'btn btn-default' %>
 <% end %>
+</div>

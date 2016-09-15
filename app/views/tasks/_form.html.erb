@@ -1,3 +1,37 @@
+<%= bootstrap_form_for [@project, @task], layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-8" do |f| %>
+
+  <%= f.text_field :title %>
+  <%= f.text_area :description %>
+
+  <% if current_user.project_hierarchy?(@project) >= 1 %>
+    <%= f.date_field :deadline %>
+  <% else %>
+    <%= f.label @task.deadline, :class => 'control-label' %>
+  <% end %>
+
+  <% if !@task.new_record? %>
+    <%= f.number_field :progress, :min => 0, :max => 100 %>
+  <% end %>
+
+  <%= f.form_group :bugs, label: {text: "Bugs"} do %>
+    <%= f.nested_fields_for :bugs, layout: :horizontal, label_col: "col-sm-1", control_col: "col-sm-8" do |bf| %>
+        <%= bf.select :id, @project.bugs.map{|b,v| [b.title, b.id] }, {label: "Bug"} %>
+        <%= bf.remove_nested_fields_link %>
+    <% end %>
+    <%= f.add_nested_fields_link :bugs %>
+  <% end %>
+
+  <%= f.form_group do %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+<!--
 <%= form_for(@task, :html => { :class => "form-horizontal event" },
     :url => project_tasks_path(@project)) do |f| %>
 <% if @task.errors.any? %>
@@ -73,3 +107,4 @@
   </div>
 </div>
 <% end %>
+-->

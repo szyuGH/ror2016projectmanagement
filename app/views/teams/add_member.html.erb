@@ -1,3 +1,40 @@
+<%= bootstrap_form_for(:team_member, :html => { :class => "form-horizontal event", :method => 'put'}, :url => {:action => "create", :id => @member},
+  layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-8") do |f| %>
+    <% if @member.errors.any? %>
+      <div id="error_explanation" class="panel panel-danger">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h3>
+        </div>
+        <div class="panel-body">
+          <ul>
+          <% @member.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+  <%= f.select :user_id, User.select{|u| !@team.has_member?(u)}.map{|u,v| [u.display_name, u.id] },{ label: "Select User"},{class: "selectpicker"}  %>
+
+  <%= f.form_group :is_admin, label: { text: "Is Admin"} do %>
+    <%= f.check_box :is_admin, label: "" %>
+  <% end %>
+
+  <%= f.form_group do %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+
+
+
+<!--
 <%= form_for(:team_member, :html => { :class => "form-horizontal event", :method => 'put'}, :url => {:action => "create", :id => @member}) do |f| %>
 <% if @member.errors.any? %>
   <div id="error_explanation" class="panel panel-danger">
@@ -38,3 +75,4 @@
   </div>
 </div>
 <% end %>
+-->
