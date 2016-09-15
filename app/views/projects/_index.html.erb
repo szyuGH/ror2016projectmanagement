@@ -16,7 +16,11 @@
         <td><%= project.id %></td>
         <td><%= link_to project.title, project_path(project) %></td>
         <td><%= project.manager.display_name %></td>
-        <td><%= link_to project.tasks.count, project_tasks_path(project) %></td>
+        <% if current_user.project_hierarchy?(project) >= 0 %>
+          <td><%= link_to project.tasks.count, project_tasks_path(project) %></td>
+        <% else %>
+          <td><%= project.tasks.count %></td>
+        <% end %>
         <td><%= link_to project.bugs.count, project_bugs_path(project) %></td>
         <td>
           <% if current_user.project_hierarchy?(project) >= 2 %>

@@ -17,7 +17,7 @@
   <dt><strong><%= model_class.human_attribute_name(:state) %>:</strong></dt>
   <dd><%= model_class.human_attribute_name(@bug.state) %></dd>
 
-  <% if @bug.tasks.count > 0 %>
+  <% if current_user.project_hierarchy?(@project) >= 0 && @bug.tasks.count > 0 %>
     <dt><strong><%= model_class.human_attribute_name(:tasks) %>:</strong></dt>
     <% @bug.tasks.each do |task| %>
       <dd><%= link_to task.title, project_task_path(@project, task) %></dd>

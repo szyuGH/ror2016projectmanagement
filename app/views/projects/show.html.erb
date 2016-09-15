@@ -31,7 +31,7 @@
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
               projects_path, :class => 'btn btn-default'  %>
-<% if current_user.project_hierarchy?(@project) %>
+<% if current_user.project_hierarchy?(project) >= 2 %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_project_path(@project), :class => 'btn btn-default' %>
 <% end %>

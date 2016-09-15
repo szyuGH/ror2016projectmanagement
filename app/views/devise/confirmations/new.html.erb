@@ -10,6 +10,7 @@
 
   <%= f.form_group do %>
     <%= f.submit "Resend confirmation instructions" %>
+    <%= link_to "Back", "#", onclick: "history.back();", :class => 'btn btn-default' %>
   <% end %>
 <% end %>
 

@@ -21,7 +21,11 @@
         <td><%= link_to bug.title, project_bug_path(@project, bug) %></td>
         <td><%= model_class.human_attribute_name(bug.severity) %></td>
         <td><%= model_class.human_attribute_name(bug.state) %></td>
-        <td><%= link_to bug.tasks.count, project_tasks_path(@project) %></td>
+        <% if current_user.project_hierarchy?(project) >= 0 %>
+          <td><%= link_to bug.tasks.count, project_tasks_path(@project) %></td>
+        <% else %>
+          <td><%= bug.tasks.count %></td>
+        <% end %>
         <td>
           <% if current_user.project_hierarchy?(@project) >= 0 || bug.creator == current_user %>
             <%= link_to t('.show', :default => t("helpers.links.show")),
